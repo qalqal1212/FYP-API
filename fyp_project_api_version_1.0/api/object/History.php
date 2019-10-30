@@ -18,7 +18,7 @@ class History
 
     public function historyRetailer()
     {
-        $statement = "SELECT B.retailerid, A.transactionid, A.amount, A.created_at as datetime FROM transaction_purchase A INNER JOIN retailer B ON A.receiver = B.accountid WHERE B.retailerid=? ORDER BY receiver";
+        $statement = "SELECT B.retailerid, A.transactionid, A.amount, A.created_at as datetime FROM transaction_purchase A INNER JOIN account_retailer B ON A.receiver = B.accountid WHERE B.retailerid=? ORDER BY receiver";
 
         $query = $this->connection->prepare($statement);
 

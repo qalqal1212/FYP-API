@@ -1,24 +1,25 @@
 <?php
-// required headers
+//required
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-// get database connection
+
+//get database connection 
 include_once '../config/Database.php';
 
-// instantiate product object
-include_once '../object/Purchase.php';
+//instantiate product object 
+include_once '../object/Puchase2.php';
 
-// instantiate database and product object
+//instantiate database and product object
 $db = new Database();
 $database = $db->databaseConnect();
 
-$purchase = new Purchase($database);
+$purchase = new Purchase2($database);
 
-// set user property values
+//set user property values 
 $purchase->userid = isset($_GET['userid']) ? $_GET['userid'] : die();
 $purchase->retailerid = isset($_GET['retailerid']) ? $_GET['retailerid'] : die();
 $purchase->amount = isset($_GET['amount']) ? $_GET['amount'] : die();
@@ -31,11 +32,11 @@ $purchase->getAccountRetailer();
 
 $purchase->calculateDeduction();
 
-// create the user
+//create the user 
 if ($purchase->purchaseCreate()) {
 
     $purchase->updateAccountUser();
-    $purchase->updateAccountRetailer();
+    $purchase->updateAccountUser();
 
     $purchase_arr = array(
         "status" => true,
@@ -47,7 +48,7 @@ if ($purchase->purchaseCreate()) {
 } else {
     $purchase_arr = array(
         "status" => false,
-        "message" => "Transaction Unsuccessful",
+        "message" => "Transaction fail",
     );
 }
 print_r(json_encode($purchase_arr));
